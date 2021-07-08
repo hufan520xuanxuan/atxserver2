@@ -1,7 +1,7 @@
 # atxserver2 API文档
 设备占用接口参考了openstf的[API](https://github.com/openstf/stf/blob/master/doc/API.md)
 
-其中`$SERVER_URL`代表atxserver2的地址，如`http://localhost:4000`
+其中`$SERVER_URL`代表atxserver2的地址,如`http://localhost:4000`
 
 所有的接口采用token认证，每个请求在 Header中增加 Authorization: Bearer xxxxx-token-xxxx
 

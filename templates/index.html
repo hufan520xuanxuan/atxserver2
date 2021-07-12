@@ -37,25 +37,25 @@ class="container-fluid"
         <el-alert v-if="websocketDisconnected" title="WebSocket连接断开，点击或F5刷新重连" type="error">
         </el-alert>
     </span>
-    <div class="row">
-        <div class="col-12" style="margin-top: 10px">
-            <div class="card  border-light">
-                <div class="card-body">
-                    <div>
-                        <!-- <el-checkbox size="mini" v-model="filters.private"><i class="fas fa-lock"></i> 私有设备
-                        </el-checkbox> -->
-                    </div>
-                    <div>
-                        <el-checkbox size="mini" v-model="filters.platform.android">
-                            <i class="fab fa-android"></i> 安卓 <small>{{!counts.android}}</small>
-                        </el-checkbox>
-                        <el-checkbox size="mini" v-model="filters.platform.apple">
-                            <i class="fab fa-apple"></i> 苹果 <small>{{!counts.apple}}</el-checkbox>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<!--    <div class="row">-->
+<!--        <div class="col-12" style="margin-top: 10px">-->
+<!--            <div class="card  border-light">-->
+<!--                <div class="card-body">-->
+<!--                    <div>-->
+<!--                        &lt;!&ndash; <el-checkbox size="mini" v-model="filters.private"><i class="fas fa-lock"></i> 私有设备-->
+<!--                        </el-checkbox> &ndash;&gt;-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <el-checkbox size="mini" v-model="filters.platform.android">-->
+<!--                            <i class="fab fa-android"></i> 安卓 <small>{{!counts.android}}</small>-->
+<!--                        </el-checkbox>-->
+<!--                        <el-checkbox size="mini" v-model="filters.platform.apple">-->
+<!--                            <i class="fab fa-apple"></i> 苹果 <small>{{!counts.apple}}</el-checkbox>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
     <el-table :data="tableData">
         <!-- <el-table-column prop="udid" label="UDID"></el-table-column> -->
         <el-table-column label="操作">
@@ -121,25 +121,25 @@ class="container-fluid"
         </el-table-column>
         <el-table-column prop="prop_brand" sortable label="品牌"></el-table-column>
 
-        <el-table-column :sort-method="tableSortBy('prop_propertyId')" sortable label="资产编号">
-            <template slot-scope="scope">
-                <!-- <el-input size="mini"></el-input> -->
-                <atx-edit-inline :readonly="!user.admin" :value="scope.row.prop_propertyId"
-                    @change="updatePropertyId(scope.row.udid, $event)">
-                </atx-edit-inline>
-                <!-- <span v-text="prop_propertyId"></span> <i class="fas fa-edit cursor-pointer"></i> -->
-            </template>
-        </el-table-column>
+<!--        <el-table-column :sort-method="tableSortBy('prop_propertyId')" sortable label="资产编号">-->
+<!--            <template slot-scope="scope">-->
+<!--                &lt;!&ndash; <el-input size="mini"></el-input> &ndash;&gt;-->
+<!--                <atx-edit-inline :readonly="!user.admin" :value="scope.row.prop_propertyId"-->
+<!--                    @change="updatePropertyId(scope.row.udid, $event)">-->
+<!--                </atx-edit-inline>-->
+<!--                &lt;!&ndash; <span v-text="prop_propertyId"></span> <i class="fas fa-edit cursor-pointer"></i> &ndash;&gt;-->
+<!--            </template>-->
+<!--        </el-table-column>-->
 
-       <el-table-column :sort-method="tableSortBy('department')" sortable label="所属部门">
-            <template slot-scope="scope">
-                <!-- <el-input size="mini"></el-input> -->
-                <atx-edit-inline :readonly="!user.admin" :value="scope.row.department"
-                    @change="updateDeviceDepartment(scope.row.udid, $event)">
-                </atx-edit-inline>
-                <!-- <span v-text="prop_propertyId"></span> <i class="fas fa-edit cursor-pointer"></i> -->
-            </template>
-        </el-table-column>
+<!--       <el-table-column :sort-method="tableSortBy('department')" sortable label="所属部门">-->
+<!--            <template slot-scope="scope">-->
+<!--                &lt;!&ndash; <el-input size="mini"></el-input> &ndash;&gt;-->
+<!--                <atx-edit-inline :readonly="!user.admin" :value="scope.row.department"-->
+<!--                    @change="updateDeviceDepartment(scope.row.udid, $event)">-->
+<!--                </atx-edit-inline>-->
+<!--                &lt;!&ndash; <span v-text="prop_propertyId"></span> <i class="fas fa-edit cursor-pointer"></i> &ndash;&gt;-->
+<!--            </template>-->
+<!--        </el-table-column>-->
 
         <!-- <el-table-column prop="prop_brand" label="品牌"></el-table-column> -->
         <el-table-column prop="prop_version" sortable :sort-method="semverCompare" label="Version"></el-table-column>

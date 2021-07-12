@@ -18,6 +18,7 @@ from typing import Dict, Union, Optional
 
 class CurrentUserMixin(object):
     def bunchify(self, d: Union[dict, None]):
+        print('CurrentUserMixin判断1:', isinstance(d, dict))
         if isinstance(d, dict):
             d['admin'] = d.get('admin', False)
         return Bunch(d) if d else None
@@ -36,6 +37,7 @@ class CurrentUserMixin(object):
 
         Refs: https://www.tornadoweb.org/en/stable/guide/security.html#user-authentication
         """
+        # print('请求参数2:', self.request.headers)
         auth_content = self.request.headers.get('Authorization', '')
         if auth_content:
             auth_prefix = 'Bearer '
@@ -68,7 +70,8 @@ class CurrentUserMixin(object):
                     "createdAt": now,
                     "lastLoggedInAt": now,
                 }, ret['id'])
-            user_count = await db.table("users").filter({"admin": True}).filter(r.row["createdAt"].le(now)).count() # yapf: disable
+            user_count = await db.table("users").filter({"admin": True}).filter(
+                r.row["createdAt"].le(now)).count()  # yapf: disable
             if user_count == 0:
                 # set first user as admin
                 await db.table("users").save(dict(admin=True), ret['id'])
@@ -91,6 +94,7 @@ class BaseRequestHandler(CurrentUserMixin, tornado.web.RequestHandler):
         self.current_user = await self.get_current_user_async()
 
     def write_json(self, data):
+        print('data:::', data)
         assert isinstance(data, dict)
         self.set_header("Content-Type", "application/json; charset=utf-8")
         content = jsondate.dumps(data)
@@ -116,6 +120,13 @@ class AuthRequestHandler(BaseRequestHandler):
     """ request user logged in before http request """
 
     async def prepare(self):
+        print('请求参数1:', self.request.uri)
+        # 解析打开地址传入的name字段
+        if '?name' in self.request.uri:
+            name = self.request.uri.split('/?name=', 1)[1]
+            print('字符串切割完名称:', name)
+            email = name + "@mail.com"
+            await self.set_current_user(email, name)
         if self.request.method == "OPTIONS":  # CORS
             return
         await super().prepare()
@@ -137,6 +148,7 @@ class BaseWebSocketHandler(CurrentUserMixin,
 
     async def prepare(self):
         self.current_user = await self.get_current_user_async()
+        # print('验证用户:', self.current_user)
 
     def check_origin(self, origin):
         return True

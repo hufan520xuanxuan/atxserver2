@@ -19,7 +19,7 @@ class OpenIdLoginHandler(BaseRequestHandler, OpenIdMixin):
             except AuthError as e:
                 self.write(
                     "<code>Auth error: {}</code> <a href='/login'>Login</a>".
-                    format(e))
+                        format(e))
             else:
                 logger.info("User info: %s", user)
                 await self.set_current_user(user['email'], user['name'])
@@ -30,17 +30,29 @@ class OpenIdLoginHandler(BaseRequestHandler, OpenIdMixin):
 
 
 class SimpleLoginHandler(BaseRequestHandler):
-    def get(self):
-        self.set_cookie("next", self.get_argument("next", "/"))
-        self.write('<html><body><form action="/login" method="post">'
-                   'Name: <input type="text" name="name" required>'
-                   '<input type="submit" value="Sign in">'
-                   '</form></body></html>')
+    async def get(self):
+        print('SimpleLoginHandler 请求参数00:', self.request.uri)
+        # next_url = self.get_cookie("next", "/")
+        # name = self.get_cookie("name", "administrator")
+        # print('获取到name:', name)
+        # 去掉登录页面 直接请求登录接口
+        # name = 'xiaohei'
+        # name = self.get_argument("name")
+        # email = name + "@mail.com"
+        # await self.set_current_user(email, name)
+        # next_url = self.get_cookie("next", "/")
+        # self.clear_cookie("next")
+        # self.redirect(next_url)
+#         self.set_cookie("next", self.get_argument("next", "/"))
+#         self.write('<html><body><form action="/login" method="post">'
+#                    'Name: <input type="text" name="name" required>'
+#                    '<input type="submit" value="Sign in">'
+#                    '</form></body></html>')
 
-    async def post(self):
-        name = self.get_argument("name")
-        email = name + "@anonymous.com"
-        await self.set_current_user(email, name)
-        next_url = self.get_cookie("next", "/")
-        self.clear_cookie("next")
-        self.redirect(next_url)
+#     async def post(self):
+#         name = self.get_argument("name")
+#         email = name + "@anonymous.com"
+#         await self.set_current_user(email, name)
+#         next_url = self.get_cookie("next", "/")
+#         self.clear_cookie("next")
+#         self.redirect(next_url)

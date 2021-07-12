@@ -47,7 +47,7 @@ def main():
     # yapf: enable
 
     args = parser.parse_args()
-    print(args)
+    print('启动程序参数::', args)
     enable_pretty_logging()
 
     db.setup()
@@ -67,7 +67,7 @@ def main():
     app = make_app(login_handler, debug=args.debug)
     server = HTTPServer(app, xheaders=not args.no_xheaders)
     server.listen(args.port)
-    logger.info("listen on port http://%s:%d", machine_ip(), args.port)
+    logger.info("监听端口 http://%s:%d", machine_ip(), args.port)
     try:
         ioloop.start()
     except KeyboardInterrupt:
